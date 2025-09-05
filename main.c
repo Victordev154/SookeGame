@@ -9,7 +9,7 @@
 
 int largura = 80, altura = 20;
 int velocidade = 100;
-int nivelMapa = 1; // Define o mapa a ser carregado. Padr„o: 1 (F·cil)
+int nivelMapa = 1; // Define o mapa a ser carregado. Padr√£o: 1 (F√°cil)
 
 typedef struct
 {
@@ -166,14 +166,14 @@ int verificarColisaoObstaculo(int x, int y) {
     DWORD charsRead;
     COORD coord = { (SHORT)x, (SHORT)y };
 
-    // LÍ 1 caractere da tela na coordenada especificada
+    // L√™ 1 caractere da tela na coordenada especificada
     if (ReadConsoleOutputCharacter(hConsole, (LPTSTR)buffer, 1, coord, &charsRead)) {
-        // Se o caractere lido for um obst·culo '#', retorna 1 (colis„o)
+        // Se o caractere lido for um obst√°culo '#', retorna 1 (colis√£o)
         if (buffer[0] == '#') {
             return 1;
         }
     }
-    // Caso contr·rio, retorna 0 (sem colis„o)
+    // Caso contr√°rio, retorna 0 (sem colis√£o)
     return 0;
 }
 
@@ -205,26 +205,26 @@ void gerarMapaProcedural() {
     char mapa[altura][largura + 1]; // +1 para o caractere nulo '\0'
     int x, y;
 
-    // Preenche o mapa inteiro com paredes sÛlidas
+    // Preenche o mapa inteiro com paredes s√≥lidas
     for (y = 0; y < altura; y++) {
         for (x = 0; x < largura; x++) {
             mapa[y][x] = '#';
         }
     }
 
-    // LÛgica do "Escavador" (Random Walk)
-    srand(time(NULL)); // Garante que a aleatoriedade seja diferente a cada execuÁ„o
+    // L√≥gica do "Escavador" (Random Walk)
+    srand(time(NULL)); // Garante que a aleatoriedade seja diferente a cada execu√ß√£o
     int walkerX = largura / 2;
     int walkerY = altura / 2;
     
-    // Define quantos passos o escavador dar·. Mais passos = mapa mais aberto.
+    // Define quantos passos o escavador dar√°. Mais passos = mapa mais aberto.
     int numPassos = (largura * altura) / 0.25; 
 
     for (i = 0; i < numPassos; i++) {
-        // Escava a posiÁ„o atual
+        // Escava a posi√ß√£o atual
         mapa[walkerY][walkerX] = ' ';
 
-        // Escolhe uma direÁ„o aleatÛria (0:Norte, 1:Sul, 2:Leste, 3:Oeste)
+        // Escolhe uma dire√ß√£o aleat√≥ria (0:Norte, 1:Sul, 2:Leste, 3:Oeste)
         int direcaoAleatoria = rand() % 4;
         
         switch(direcaoAleatoria) {
@@ -234,14 +234,14 @@ void gerarMapaProcedural() {
             case 3: walkerX--; break; // Esquerda
         }
 
-        // Garante que o escavador n„o saia das bordas do mapa
+        // Garante que o escavador n√£o saia das bordas do mapa
         if (walkerX < 1) walkerX = 1;
         if (walkerX > largura - 2) walkerX = largura - 2;
         if (walkerY < 1) walkerY = 1;
         if (walkerY > altura - 2) walkerY = altura - 2;
     }
     
-    // 3. Garante que a ·rea inicial da cobra esteja limpa
+    // 3. Garante que a √°rea inicial da cobra esteja limpa
     mapa[altura / 2][largura / 2] = ' ';
 
     // 4. Desenha o mapa gerado na tela
@@ -380,7 +380,7 @@ void menuDificuldade() {
             nivelMapa = 5;
             break;
         case '6':
-            velocidade = 75; // Uma velocidade intermedi·ria para o modo procedural
+            velocidade = 75; // Uma velocidade intermedi√°ria para o modo procedural
             nivelMapa = 6;
             break;
         default: break;
@@ -477,10 +477,10 @@ int main() {
         system("cls");
 
          if (nivelMapa == 6) {
-            // Se for o nÌvel 6, gera um mapa procedural em vez de carregar um arquivo
+            // Se for o n√≠vel 6, gera um mapa procedural em vez de carregar um arquivo
             gerarMapaProcedural();
         } else {
-            // Para todos os outros nÌveis, carrega o mapa do arquivo correspondente
+            // Para todos os outros n√≠veis, carrega o mapa do arquivo correspondente
             char nomeMapa[20];
             sprintf(nomeMapa, "mapa%d.txt", nivelMapa); 
             if (!carregarMapaDeArquivo(nomeMapa)) {
@@ -497,11 +497,11 @@ int main() {
         x[1] = x[0];
         y[1] = y[0];
 
-        // Loop para garantir que a maÁ„ n„o apareÁa em um obst·culo
+        // Loop para garantir que a ma√ß√£ n√£o apare√ßa em um obst√°culo
         do {
             mx = (rand() % (largura - 4)) + 2;
             my = (rand() % (altura - 4)) + 3;
-        } while (verificarColisaoObstaculo(mx, my)); // Repete se mx,my for um obst·culo '#'
+        } while (verificarColisaoObstaculo(mx, my)); // Repete se mx,my for um obst√°culo '#'
 
         maca(mx, my);
 
@@ -543,8 +543,8 @@ int main() {
                     break;
             }
 
-            // --- NOVA VERIFICA«√O DE COLIS√O COM OBST¡CULO ---
-            // Verifica se a nova posiÁ„o da cabeÁa (x[1], y[1]) È um '#'
+            // --- NOVA VERIFICA√á√ÉO DE COLIS√ÉO COM OBST√ÅCULO ---
+            // Verifica se a nova posi√ß√£o da cabe√ßa (x[1], y[1]) √© um '#'
             if (verificarColisaoObstaculo(x[1], y[1])) {
                 over = 1; // Se for, o jogo acaba
             }
@@ -557,11 +557,11 @@ int main() {
 
             if(x[1] == mx && y[1] == my)
             {
-                // Loop para garantir que a NOVA maÁ„ n„o apareÁa em um obst·culo
+                // Loop para garantir que a NOVA ma√ß√£ n√£o apare√ßa em um obst√°culo
                 do {
                     mx = (rand() % (largura - 4)) + 2;
                     my = (rand() % (altura - 4)) + 3;
-                } while (verificarColisaoObstaculo(mx, my)); // Repete se mx,my for um obst·culo '#'
+                } while (verificarColisaoObstaculo(mx, my)); // Repete se mx,my for um obst√°culo '#'
 
                 maca(mx, my);
                 pontos++;
